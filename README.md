@@ -2,20 +2,12 @@
 Vim-native "which" and "exec" functions targeted at local node project bin, falling back to `which`, for easy vim integration with dev-depenendencies in node-based build processes.
 
 ## Install
-Using [vim-plug](https://github.com/junegunn/vim-plug):
-```
-Plug 'jaawerth/nrun.vim'
-```
-
-Using [vundle](https://github.com/VundleVim/Vundle.vim):
-```
-Plugin 'jaawerth/nrun.vim'
-```
+Place `autoload/nrun.vim` in your autoload directory, or add to your config with plugin tool of your choice (`Plug 'jaawerth/nrun.vim'` with [vim-plug](https://github.com/junegunn/vim-plug), `Plugin 'jaawerth/nrun.vim'` with [Vundle](https://github.com/VundleVim/Vundle.vim), etc)
 
 ## Usage Examples
 
 ### With vim + [Syntastic](https://github.com/scrooloose/syntastic)
-In you `~/.vimrc` or in a javascript ftplugin
+In your `~/.vimrc` or in a javascript ftplugin
 ```vim
 let b:syntastic_javascript_eslint_exec = nrun#Which('eslint')
 ```
