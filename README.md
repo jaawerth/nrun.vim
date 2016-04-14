@@ -29,8 +29,8 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 ```
 For more on Neomake config, see their docs - I like to put the above in an ftplugin file with the following to auto-lint on save and file load:
 ```nvim
-autocmd! BufWritePost * Neomake
-autocmd! BufWinEnter * Neomake
+autocmd! BufWritePost * Neomake eslint
+autocmd! BufWinEnter * Neomake eslint
 ```
 
 ## Functions
