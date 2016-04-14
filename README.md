@@ -2,7 +2,6 @@
 Vim-native "which" and "exec" functions targeted at local node project bin, falling back to `which`, for easy vim integration with dev-depenendencies in node-based build processes.
 
 ## Install
-Must already have neomake set up. This will automatically set eslint as a maker on top of setting its executable path for Neomake.
 Using [vim-plug](https://github.com/junegunn/vim-plug):
 ```
 Plug 'jaawerth/nrun.vim'
