@@ -1,10 +1,5 @@
 # nrun.vim
-Defines "which" and "exec" functions targeted at local node project bin, with "which" fallback
-
-## Why?
-Eases the pain of integrating vim into your JavaScript/node build tools.
-
-Many of the development and build processes inherent to node require the use of locally-installed executables for linting, testing, building, etc. While npm scripts often work well for this, invoking via npm is slow, and it can be inconvenient to set an npm script for every runnable dependency. There's `npm bin` to find your local bin directory, but it's noticeably slow, and can bog down relying vim plugins. One could use a bash script, or `npm-which` on npm, but this is a self-contained vimscript implementation with no dependencies other than a Unix-style `which` for fallback purposes.
+Vim-native "which" and "exec" functions targeted at local node project bin, falling back to `which`, for easy vim integration with dev-depenendencies in node-based build processes.
 
 ## Install
 Must already have neomake set up. This will automatically set eslint as a maker on top of setting its executable path for Neomake.
@@ -45,3 +40,9 @@ autocmd! BufWinEnter * Neomake
 ```vim
 let b:syntastic_javascript_eslint_exec = nrun#Which('eslint')
 ```
+## Why?
+Eases the pain of integrating vim into your JavaScript/node build tools.
+
+Many of the development and build processes inherent to node require the use of locally-installed executables for linting, testing, building, etc. While npm scripts often work well for this, it can be inconvenient to set an npm script for every runnable dependency. There's `npm bin` to find your local bin directory, but it's noticeably slow, and can bog down vim plugins.
+
+For a time I used a bash script, or the node-based [npm-which](https://www.npmjs.com/package/npm-which), but preferred a self-contained vimscript implementation with no global dependencies (`which` aside).
