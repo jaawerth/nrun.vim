@@ -24,13 +24,16 @@ A "which" that first tries to see if you're in a node project (traversing the cu
 ### nrun#Exec('command')
 Executes the above and passes the results to system() for you. Throws if no command found.
 
+### nrun#StrTrim(string)
+Trim the whitespace around a string (used internally to account for the newline from `which`)
+
 ## Examples
 
 ### With [neovim](https://github.com/neovim/neovim) + [Neomake](https://github.com/benekastah/neomake)
 In `~/<nvim-config>/ftplugin/javascript.vim`:
 ```nvim
 " set neomake's eslint path, and enable it as a maker
-let g:neomake_javascript_eslint_exe = nlef#Which('eslint')
+let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
 let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Auto-lint on save and buffer open
