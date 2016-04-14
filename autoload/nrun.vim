@@ -10,10 +10,12 @@ function nrun#Which(cmd)
 	let l:hp = fnamemodify('~/', ':p')
 	while l:cwd != l:hp && l:cwd != l:rp
 		if filereadable(resolve(l:cwd . '/package.json'))
-			if filereadable(fnamemodify(l:cwd . '/node_modules/.bin/' . a:cmd, ':p'))
-				return fnamemodify(l:cwd . '/node_modules/.bin/' . a:cmd, ':p')
+			let l:execPath = fnamemodify(l:cwd . '/node_modules/.bin/' . a:cmd, ':p')
+			if executable(l:execPath)
+				return l:execPath
+			else
+				break
 			endif
-			echo "failinner"
 		endif
 		let l:cwd = resolve(l:cwd . '/..')
 	endwhile
