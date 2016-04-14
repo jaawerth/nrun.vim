@@ -23,7 +23,7 @@ endfunction
 
 function! nrun#Exec(cmd)
 	let l:exec = nrun#Which(a:cmd)
-	if match(l:exec, 'not found$')
+	if match(l:exec, 'not found$') != -1
 		throw 'No command found'
 	else
 		return system(l:exec)
