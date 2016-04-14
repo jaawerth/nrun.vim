@@ -16,18 +16,20 @@ Plugin 'jaawerth/nrun.vim'
 ## Usage Examples
 
 ### With vim + [Syntastic](https://github.com/scrooloose/syntastic)
+In you `~/.vimrc` or in a javascript ftplugin
 ```vim
 let b:syntastic_javascript_eslint_exec = nrun#Which('eslint')
 ```
 
 ### With [neovim](https://github.com/neovim/neovim) + [Neomake](https://github.com/benekastah/neomake)
-This is my favorite setup. In `~/<nvim-config>/ftplugin/javascript.vim`:
+This is my favorite setup. In your `~/<nvim-config>/init.vim` or `~/<nvim-config>/ftplugin/javascript.vim`:
 ```nvim
 " set neomake's eslint path, and enable it as a maker
 let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
 let g:neomake_javascript_enabled_makers = ['eslint']
-
-" Auto-lint on save and buffer open
+```
+For more on Neomake config, see their docs - I like to put the above in an ftplugin file with the following to auto-lint on save and file load:
+```nvim
 autocmd! BufWritePost * Neomake
 autocmd! BufWinEnter * Neomake
 ```
