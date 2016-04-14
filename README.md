@@ -19,7 +19,7 @@ This is my favorite setup. In your `~/<nvim-config>/init.vim` or `~/<nvim-config
 let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
 let g:neomake_javascript_enabled_makers = ['eslint']
 ```
-For more on Neomake config, see their docs - I like to put the above in an ftplugin file with the following to auto-lint on save and file load:
+For more on Neomake config, see their docs - I like to put the above in an `ftplugin/javascript.vim` with the following to auto-lint on save and file load:
 ```nvim
 autocmd! BufWritePost * Neomake eslint
 autocmd! BufWinEnter * Neomake eslint
