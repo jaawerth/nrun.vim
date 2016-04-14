@@ -18,8 +18,14 @@ function nrun#Which(cmd)
 		let l:cwd = resolve(l:cwd . '/..')
 	endwhile
 	return nrun#StrTrim(system('which ' . a:cmd))
+
 endfunction
 
 function! nrun#Exec(cmd)
-	return system(nrun#Which(a:cmd))
+	let l:exec = nrun#Which(a:cmd)
+	if match(l:exec, 'not found$')
+		throw 'No command found'
+	else
+		return system(l:exec)
+	endif
 endfunction

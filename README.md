@@ -17,4 +17,4 @@ Plugin 'jaawerth/nrun.vim'
 A "which" that first tries to see if you're in a node project (traversing the current directly up looking for package.json and node_modules/.bin/<command>), falling back to "which" if root or home folders are hit without a match.
 
 ## nrun#Exec('command')
-Executes the above and passes the results to system() for you.
+Executes the above and passes the results to system() for you. Throws if no command found.
