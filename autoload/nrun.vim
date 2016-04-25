@@ -36,7 +36,7 @@ function nrun#Which(cmd)
 		if executable(l:execPath)
 			return l:execPath
 		else
-			return a:cmd ' not found'
+			return a:cmd . ' not found'
 		endif
 	else
 		" TODO: remove following echo statement
