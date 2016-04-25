@@ -1,9 +1,11 @@
-" trim excess whitespace
+" Settable options:
+"   'g:nrun_disable_which' - disables "which" fallback
+"   'g:nrun_which_cmd' - sets command for "which." default is simply "which",
+"   available on all (?) UNIX shells.
 
 
 if !exists('g:nrun_which_cmd')
-	" TODO: remove following echo statement
-	echom 'Setting nrun_which_cmd to default'
+	"echom 'Setting nrun_which_cmd to default'
 	let g:nrun_which_cmd = 'which'
 endif
 
@@ -11,12 +13,13 @@ if !exists('g:nrun_disable_which')
 	let g:nrun_disable_which = 0
 endif
 
-function nrun#StrTrim(txt)
+" trim excess whitespace
+function! nrun#StrTrim(txt)
   return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 endfunction
 
 " check for locally-installed executable before falling back to 'which'
-function nrun#Which(cmd)
+function! nrun#Which(cmd)
 	let l:cwd = getcwd()
 	let l:rp = fnamemodify('/', ':p')
 	let l:hp = fnamemodify('~/', ':p')
@@ -39,8 +42,7 @@ function nrun#Which(cmd)
 			return a:cmd . ' not found'
 		endif
 	else
-		" TODO: remove following echo statement
-		echom '"which" fallback disabled'
+		"echom '"which" fallback disabled'
 		return a:cmd . ' not found'
 	endif
 endfunction
