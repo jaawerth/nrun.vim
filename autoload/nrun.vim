@@ -48,7 +48,7 @@ endfunction
 function! nrun#Exec(cmd)
 	let l:exec = nrun#Which(a:cmd)
 	if match(l:exec, 'not found$') != -1
-		throw a:cmd ' not found'
+		throw l:exec
 	else
 		return system(l:exec)
 	endif
