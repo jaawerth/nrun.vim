@@ -35,7 +35,18 @@ Executes the above and passes the results to system() for you. Throws if no comm
 ### nrun#StrTrim(string)
 Trim the whitespace around a string (used internally to account for the newline from `which`)
 
-## Why?
+## Configuration                                                                                        
+If you don't want it falling back to `which` at all, add this to your .vimrc                            
+```vimscript                                                                                            
+let g:nrun_disable_which = 1                                                                            
+```                                                                                                     
+                                                                                                        
+To change the "which" executable (which might be necessary if you're in windows and not using cygwin)   
+```vimscript                                                                                            
+let g:nrun_which_cmd = 'your-which-cmd'                                                                 
+```                                                                                                     
+
+## What's the point?
 Eases the pain of integrating vim into your JavaScript/node build tools.
 
 Many of the development and build processes inherent to node require the use of locally-installed executables for linting, testing, building, etc. While npm scripts often work well for this, it can be inconvenient to set an npm script for every runnable dependency. There's `npm bin` to find your local bin directory, but it's noticeably slow, and can bog down vim plugins.
