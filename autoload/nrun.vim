@@ -2,7 +2,8 @@
 
 
 if !exists('g:nrun_which_cmd')
-	echo 'Setting nrun_which_cmd to default'
+	" TODO: remove following echo statement
+	echom 'Setting nrun_which_cmd to default'
 	let g:nrun_which_cmd = 'which'
 endif
 
@@ -31,10 +32,14 @@ function nrun#Which(cmd)
 		let l:cwd = resolve(l:cwd . '/..')
 	endwhile
 	if !g:nrun_disable_which
-		return nrun#StrTrim(system(g:nrun_which_cmd . ' ' . a:cmd))
+		let l:execPath = nrun#StrTrim(system(g:nrun_which_cmd . ' ' . a:cmd))
+		if executable(l:execPath)
+			return l:execPath
+		endif
 	else
-		echo '"which" fallback disabled'
-		throw a:cmd . ' not found'
+		" TODO: remove following echo statement
+		echom '"which" fallback disabled'
+		return a:cmd . ' not found'
 	endif
 endfunction
 
