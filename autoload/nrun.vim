@@ -46,6 +46,10 @@ function! nrun#Which(cmd, ...)
 		let l:cwd = resolve(l:cwd . '/..')
 	endwhile
 	if !l:disableFallback
+		if !executable(l:fallbackCmd)
+			throw 'Configured fallbackCmd "' . l:fallbackCmd . '" not executable'
+		endif
+
 		let l:execPath = nrun#StrTrim(system(l:fallbackCmd . ' ' . a:cmd))
 		if executable(l:execPath)
 			return l:execPath
