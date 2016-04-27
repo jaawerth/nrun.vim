@@ -25,7 +25,7 @@ function! nrun#Which(cmd, ...)
 	if a:0 >= 1
 		let l:optType = type(a:1)
 		if optType == 0 || optType == 6
-			let l:disableFallback = a:1
+			let l:disableFallback = !a:1
 		elseif optType == 1
 			let l:fallbackCmd = a:1
 		endif
