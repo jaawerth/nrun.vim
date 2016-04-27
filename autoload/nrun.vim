@@ -4,22 +4,33 @@
 "   available on all (?) UNIX shells.
 
 
-if !exists('g:nrun_which_cmd')
-	"echom 'Setting nrun_which_cmd to default'
-	let g:nrun_which_cmd = 'which'
-endif
-
-if !exists('g:nrun_disable_which')
-	let g:nrun_disable_which = 0
-endif
-
 " trim excess whitespace
 function! nrun#StrTrim(txt)
   return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 endfunction
 
 " check for locally-installed executable before falling back to 'which'
-function! nrun#Which(cmd)
+" takes a second optional arg for "which" fallback: 0 or v:valse will disable
+" the fallback entirely, a string sets the fallback command. Alternatively,
+" takes a dictionary with "disable_fallback" and "fallback_cmd" keys
+function! nrun#Which(cmd, ...)
+	let l:fallbackCmd = 'which'
+	let l:disableFallback = exists('g:nrun_disable_which') && g:nrun_disable_which
+
+	if exists('g:nrun_which_cmd')
+		let l:fallbackCmd = g:nrun_which_cmd
+	endif
+
+	" optional args.
+	if a:0 >= 1
+		let l:optType = type(a:1)
+		if optType == 0 || optType == 6
+			let l:disableFallback = a:1
+		elseif optType == 1
+			let l:fallbackCmd = a:1
+		endif
+		unlet l:optType
+	endif
 	let l:cwd = getcwd()
 	let l:rp = fnamemodify('/', ':p')
 	let l:hp = fnamemodify('~/', ':p')
@@ -34,15 +45,14 @@ function! nrun#Which(cmd)
 		endif
 		let l:cwd = resolve(l:cwd . '/..')
 	endwhile
-	if !g:nrun_disable_which
-		let l:execPath = nrun#StrTrim(system(g:nrun_which_cmd . ' ' . a:cmd))
+	if !l:disableFallback
+		let l:execPath = nrun#StrTrim(system(l:fallbackCmd . ' ' . a:cmd))
 		if executable(l:execPath)
 			return l:execPath
 		else
 			return a:cmd . ' not found'
 		endif
 	else
-		"echom '"which" fallback disabled'
 		return a:cmd . ' not found'
 	endif
 endfunction
