@@ -16,18 +16,17 @@ let b:syntastic_javascript_eslint_exec = nrun#Which('eslint')
 This is my favorite setup. In your `~/<nvim-config>/init.vim` or `~/<nvim-config>/ftplugin/javascript.vim`:
 ```nvim
 " set neomake's eslint path, and enable it as a maker
-let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
-let g:neomake_javascript_enabled_makers = ['eslint']
+let b:neomake_javascript_eslint_exe = nrun#Which('eslint')
+let b:neomake_javascript_enabled_makers = ['eslint']
 ```
 For more on Neomake config, see their docs - I like to combine the above with:
-```nvim
-autocmd! BufWritePost * Neomake
-autocmd! BufWinEnter * Neomake
+```vimscript
+autocmd! FileType javascript,BufWinEnter,BufWritePost * Neomake
 ```
 
 ## Functions
 ### nrun#Which('command')
-A "which" that first tries to see if you're in a node project (traversing the current directly up looking for package.json and node_modules/.bin/<command>), falling back to "which" if root or home folders are hit without a match.
+A "which" that first tries to see if you're in a node project (traversing the current directly up looking for `package.json` and `node_modules/.bin/<command>`), falling back to "which" if root or home folders are hit without a match.
 
 ### nrun#Exec('command')
 Executes the above and passes the results to system() for you. Throws if no command found.
@@ -35,16 +34,14 @@ Executes the above and passes the results to system() for you. Throws if no comm
 ### nrun#StrTrim(string)
 Trim the whitespace around a string (used internally to account for the newline from `which`)
 
-## Configuration                                                                                        
-If you don't want it falling back to `which` at all, add this to your .vimrc                            
-```vimscript                                                                                            
-let g:nrun_disable_which = 1                                                                            
-```                                                                                                     
-                                                                                                        
-To change the "which" executable (which might be necessary if you're in windows and not using cygwin)   
-```vimscript                                                                                            
-let g:nrun_which_cmd = 'your-which-cmd'                                                                 
-```                                                                                                     
+## Configuration
+### Single function call
+To **change** the fallback command, pass it in as the second argument. For example, on Windows shell you may want to use `where`: `nrun#Which('tape', 'where')`
+
+To **disable** fallback so it only looks within the local project, pass in **0** as the second argumetN: `nrun#Which('tape', 0)`
+
+### Global
+`g:nrun_which_cmd` can be set to globally set a fallback, and `let g:nrun_disable_which = 1` will disable it unless overriden by the function call.
 
 ## What's the point?
 Eases the pain of integrating vim into your JavaScript/node build tools.
