@@ -61,8 +61,13 @@ function! nrun#Which(cmd, ...)
 	endif
 endfunction
 
-function! nrun#Exec(cmd)
-	let l:exec = nrun#Which(a:cmd)
+function! nrun#Exec(cmd, ...)
+	if a:0 >= 1
+		let l:exec = nrun#Which(a:cmd, a:1)
+	else
+		let l:exec = nrun#Which(a:cmd)
+	endif
+
 	if match(l:exec, 'not found$') != -1
 		throw l:exec
 	else
