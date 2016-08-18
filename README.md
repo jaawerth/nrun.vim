@@ -9,15 +9,16 @@ Place `autoload/nrun.vim` in your autoload directory, or add to your config with
 ### With vim + [Syntastic](https://github.com/scrooloose/syntastic)
 In your `~/.vimrc` or in a javascript ftplugin
 ```vim
-let b:syntastic_javascript_eslint_exec = nrun#Which('eslint')
+au BufEnter *.js let b:syntastic_javascript_eslint_exec = nrun#Which('eslint')
 ```
 
 ### With [neovim](https://github.com/neovim/neovim) + [Neomake](https://github.com/benekastah/neomake)
 This is my favorite setup. In your `~/<nvim-config>/init.vim` or `~/<nvim-config>/ftplugin/javascript.vim`:
 ```nvim
-" set neomake's eslint path, and enable it as a maker
-let b:neomake_javascript_eslint_exe = nrun#Which('eslint')
-let b:neomake_javascript_enabled_makers = ['eslint']
+" you can set your enabled makers globally (like below) or on the buffer level as part of an autocmd - see Neomake docs for details
+let g:neomake_javascript_enabled_makers = ['eslint']
+" when switching/opening a JS buffer, set neomake's eslint path, and enable it as a maker
+au BufEnter *.js let b:neomake_javascript_eslint_exe = nrun#Which('eslint')
 ```
 For more on Neomake config, see their docs - I like to combine the above with:
 ```vimscript
