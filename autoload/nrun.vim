@@ -31,7 +31,7 @@ function! nrun#Which(cmd, ...)
 		endif
 		unlet l:optType
 	endif
-	let l:cwd = getcwd()
+	let l:cwd = expand("%:p:h")
 	let l:rp = fnamemodify('/', ':p')
 	let l:hp = fnamemodify('~/', ':p')
 	while l:cwd != l:hp && l:cwd != l:rp
@@ -39,8 +39,6 @@ function! nrun#Which(cmd, ...)
 			let l:execPath = fnamemodify(l:cwd . '/node_modules/.bin/' . a:cmd, ':p')
 			if executable(l:execPath)
 				return l:execPath
-			else
-				break
 			endif
 		endif
 		let l:cwd = resolve(l:cwd . '/..')
