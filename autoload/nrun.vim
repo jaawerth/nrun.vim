@@ -59,6 +59,19 @@ function! nrun#Which(cmd, ...)
 	endif
 endfunction
 
+function! nrun#Where(file)
+	let l:cwd = expand("%:p:h")
+	let l:rp = fnamemodify('/', ':p')
+	let l:hp = fnamemodify('~/', ':p')
+	while l:cwd != l:hp && l:cwd != l:rp
+		if filereadable(resolve(l:cwd . '/' . a:file))
+			return fnamemodify(l:cwd . '/' . a:file, ':p')
+		endif
+		let l:cwd = resolve(l:cwd . '/..')
+	endwhile
+  return a:file . ' not found'
+endfunction
+
 function! nrun#Exec(cmd, ...)
 	if a:0 >= 1
 		let l:exec = nrun#Which(a:cmd, a:1)
