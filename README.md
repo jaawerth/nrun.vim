@@ -22,7 +22,11 @@ au BufEnter *.js let b:neomake_javascript_eslint_exe = nrun#Which('eslint')
 ```
 For more on Neomake config, see their docs - I like to combine the above with:
 ```vimscript
-autocmd! FileType javascript,BufWinEnter,BufWritePost * Neomake
+au BufWinEnter,BufWritePost *.js,*.jsx,*.whateverelse Neomake
+```
+or simply
+```vimscript
+au BufWinEnter,BufWritePost * Neomake
 ```
 
 ## Functions
